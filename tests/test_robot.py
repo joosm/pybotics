@@ -202,10 +202,11 @@ def test_calculate_joint_torques(planar_robot: Robot,
     np.testing.assert_allclose(actual_torques, expected_torques)
 
 
-@given(q=arrays(shape=(3,), dtype=float, elements=floats(max_value=1e9,
-                                                         min_value=-1e9,
-                                                         allow_nan=False,
-                                                         allow_infinity=False)))
+@given(q=arrays(shape=(3,), dtype=float,
+                elements=floats(max_value=1e9,
+                                min_value=-1e9,
+                                allow_nan=False,
+                                allow_infinity=False)))
 def test_jacobian_world(q: np.ndarray, planar_robot: Robot,
                         planar_robot_link_lengths: Tuple):
     """Test Jacobian in the World Frame."""
@@ -222,8 +223,9 @@ def test_jacobian_world(q: np.ndarray, planar_robot: Robot,
     expected[0, 0] = -planar_robot_link_lengths[0] * s0 \
                      - planar_robot_link_lengths[1] * s01
     expected[0, 1] = - planar_robot_link_lengths[1] * s01
-    expected[1, 0] = planar_robot_link_lengths[0] * c0 \
-                     + planar_robot_link_lengths[1] * c01
+    expected[1, 0] = \
+        planar_robot_link_lengths[0] * c0 \
+        + planar_robot_link_lengths[1] * c01
     expected[1, 1] = planar_robot_link_lengths[1] * c01
     expected[-1, :] = 1
 
@@ -244,8 +246,9 @@ def test_jacobian_flange(q: np.ndarray, planar_robot: Robot,
 
     expected = np.zeros((6, 3))
     expected[0, 0] = planar_robot_link_lengths[0] * s1
-    expected[1, 0] = planar_robot_link_lengths[0] * c1 + \
-                     planar_robot_link_lengths[1]
+    expected[1, 0] = \
+        planar_robot_link_lengths[0] * c1 + \
+        planar_robot_link_lengths[1]
     expected[1, 1] = planar_robot_link_lengths[1]
     expected[-1, :] = 1
 
