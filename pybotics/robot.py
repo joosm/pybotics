@@ -308,4 +308,4 @@ class Robot(Sized):
             joint_torques.append(moment[-1])
 
         # reverse torques into correct order
-        return np.ndarray(list(reversed(joint_torques)), dtype=float)
+        return np.array(list(reversed(joint_torques)), dtype=float)
