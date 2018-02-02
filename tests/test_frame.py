@@ -16,10 +16,10 @@ def test_optimization(world_frame):
     # noinspection PyTypeChecker
     assert all(world_frame.optimization_mask)
 
-    mask = [True] * TRANSFORM_VECTOR_LENGTH
+    mask = [True] * 6
     mask[masked_index] = False
     world_frame.optimization_mask = mask
-    assert sum(world_frame.optimization_mask) == TRANSFORM_VECTOR_LENGTH - 1
+    assert sum(world_frame.optimization_mask) == 6 - 1
 
     # test optimization vector
     masked_element = world_frame.vector()[masked_index]
@@ -40,7 +40,7 @@ def test_matrix(world_frame):
     :param world_frame:
     :return:
     """
-    new_matrix = np.ones(TRANSFORM_MATRIX_SHAPE)
+    new_matrix = np.ones((4, 4))
     world_frame.matrix = new_matrix
     np.testing.assert_allclose(world_frame.matrix, new_matrix)
 

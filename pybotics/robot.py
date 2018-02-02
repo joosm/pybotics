@@ -223,15 +223,10 @@ class Robot(Sized):
 
         rotation = pose[:3, :3]
 
-        jacobian_transform = np.zeros(
-            (ROTATION_VECTOR_LENGTH * 2, ROTATION_VECTOR_LENGTH * 2),
-            dtype=float
-        )
+        jacobian_transform = np.zeros((6, 6), dtype=float)
 
-        jacobian_transform[:ROTATION_VECTOR_LENGTH, :ROTATION_VECTOR_LENGTH] = \
-            rotation
-        jacobian_transform[ROTATION_VECTOR_LENGTH:, ROTATION_VECTOR_LENGTH:] = \
-            rotation
+        jacobian_transform[:3, :3] = rotation
+        jacobian_transform[3:, 3:] = rotation
         jacobian_world = np.dot(jacobian_transform, jacobian_flange)
 
         return jacobian_world

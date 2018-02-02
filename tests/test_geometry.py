@@ -46,7 +46,7 @@ def test_matrix_2_euler_zyx():
          0, 1, 0, 0,
          -1, 0, 0, 0,
          0, 0, 0, 1]
-    ).reshape(TRANSFORM_MATRIX_SHAPE)
+    ).reshape((4, 4))
     desired = [0, 0, 0, 0, np.deg2rad(90), 0]
     actual = matrix_2_euler_zyx(corner_case_matrix)
     np.testing.assert_allclose(actual=actual, desired=desired, atol=1e-6)
@@ -57,7 +57,7 @@ def test_matrix_2_euler_zyx():
          0, 1, 0, 0,
          1, 0, 0, 0,
          0, 0, 0, 1]
-    ).reshape(TRANSFORM_MATRIX_SHAPE)
+    ).reshape((4, 4))
     desired = [0, 0, 0, 0, np.deg2rad(-90), 0]
     actual = matrix_2_euler_zyx(corner_case_matrix)
     np.testing.assert_allclose(actual=actual, desired=desired, atol=1e-6)

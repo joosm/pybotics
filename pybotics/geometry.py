@@ -135,9 +135,8 @@ def rotation_matrix_z(angle: float) -> np.ndarray:
 def translation_matrix(xyz: Sequence[float]) -> np.ndarray:
     """Generate a basic 4x4 translation matrix."""
     # validate
-    if len(xyz) != POSITION_VECTOR_LENGTH:
-        raise PyboticsError(
-            'len(xyz) must be {}'.format(POSITION_VECTOR_LENGTH))
+    if len(xyz) != 3:
+        raise PyboticsError('len(xyz) must be 3')
 
     matrix = np.eye(4)
     matrix[:-1, -1] = xyz

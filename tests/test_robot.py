@@ -28,7 +28,7 @@ def test_fk(serial_robot):
          -0.527587, 0.566511, -0.633022, -363.462788,
          0.321394, -0.556670, -0.766044, -600.056043,
          0, 0, 0, 1]
-    ).reshape(TRANSFORM_MATRIX_SHAPE)
+    ).reshape((4, 4))
 
     # test with position argument
     actual_pose = serial_robot.fk(q=joints)
@@ -67,7 +67,7 @@ def test_optimization(serial_robot):
     assert all(serial_robot.optimization_mask.world_frame)
     assert len(serial_robot.
                optimization_mask.
-               world_frame) == TRANSFORM_VECTOR_LENGTH
+               world_frame) == 3
 
     assert isinstance(serial_robot.optimization_mask.kinematic_chain, Sequence)
     assert all(serial_robot.optimization_mask.kinematic_chain)
@@ -79,12 +79,12 @@ def test_optimization(serial_robot):
     assert all(serial_robot.optimization_mask.tool)
     assert len(serial_robot.
                optimization_mask.
-               tool) == TRANSFORM_VECTOR_LENGTH
+               tool) == 3
 
     # test optimization vector
     # apply mask with single False
     # check to make sure everything is properly set
-    frame_mask = [True] * TRANSFORM_VECTOR_LENGTH
+    frame_mask = [True] * 6
     frame_mask[masked_index] = False
 
     kc_mask = [True] * serial_robot.kinematic_chain.num_parameters

@@ -18,7 +18,7 @@ class Frame:
         :param matrix:
         """
         self._matrix = None
-        self._optimization_mask = [False] * TRANSFORM_VECTOR_LENGTH
+        self._optimization_mask = [False] * 3
 
         self.matrix = np.eye(4) if matrix is None else matrix
 
@@ -65,8 +65,7 @@ class Frame:
     @optimization_mask.setter
     def optimization_mask(self, mask: Union[bool, Sequence[bool]]) -> None:
         if isinstance(mask, bool):
-            self._optimization_mask = \
-                [mask] * TRANSFORM_VECTOR_LENGTH
+            self._optimization_mask = [mask] * 3
         else:
             self._optimization_mask = list(mask)
 
