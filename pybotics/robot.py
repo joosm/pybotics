@@ -289,12 +289,12 @@ class Robot(Sized):
 
         # loop through links from flange to base
         # each iteration calculates for link i-1
-        for i, p in reversed(list(enumerate(q))):
+        for i, angle in reversed(list(enumerate(q))):
             if i == 0:
                 break
 
             # get current link transform
-            transform = self.kinematic_chain.links[i].transform(p)
+            transform = self.kinematic_chain.links[i].transform(angle)
 
             # calculate force applied to current link
             rotation = transform[:3, :3]
