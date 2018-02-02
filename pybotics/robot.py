@@ -102,7 +102,8 @@ class Robot(Sized):
         return pose
 
     def ik(self, pose: np.ndarray, q: Optional[Sequence[float]] = None,
-           alpha: float = 0.1, atol=1e-6, max_iter=1e3) -> Optional[np.ndarray]:
+           alpha: float = 0.1, atol=1e-6, max_iter=1e3) -> \
+            Optional[np.ndarray]:
         # set seed joints
         q = self.position if q is None else np.array(q)
 
