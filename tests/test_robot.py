@@ -263,3 +263,17 @@ def test_ik(q: np.ndarray, planar_robot: Robot):
     pose_actual = planar_robot.fk(q_actual)
 
     np.testing.assert_allclose(pose_actual, pose, atol=1e-6)
+
+
+def test_position_limits(planar_robot: Robot):
+    """
+    Test property.
+
+    Make `vulture` static check happy.
+    """
+    limits = np.array([
+        [-1, -2, -3],
+        [1, 2, 3]
+    ])
+    planar_robot.position_limits = limits
+    np.testing.assert_allclose(planar_robot.position_limits, limits)
