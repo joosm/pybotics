@@ -1,6 +1,6 @@
 """Frame module."""
 from itertools import compress
-from typing import Union, Sequence
+from typing import Sequence, Union
 
 import numpy as np  # type: ignore
 
