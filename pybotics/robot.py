@@ -101,7 +101,7 @@ class Robot(Sized):
         return pose
 
     def ik(self, pose: np.ndarray, q: Optional[Sequence[float]] = None,
-           alpha: float = 0.1, atol=1e-6, max_iter=1e3) -> \
+           alpha: float = 0.1, atol: float = 1e-6, max_iter: float = 1e3) -> \
             Optional[np.ndarray]:
         """Solve the inverse kinematics."""
         # set seed joints
@@ -134,7 +134,7 @@ class Robot(Sized):
                 # update joints
                 dq = np.dot(j_pinv, vector_diff)
                 q += alpha * dq
-                q = np.array([wrap_2_pi(x) for x in q])
+                q = np.array([wrap_2_pi(x) for x in q])  # type: ignore
 
         return q
 
