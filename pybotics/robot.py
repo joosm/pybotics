@@ -301,8 +301,9 @@ class Robot(Sized):
             force = np.dot(rotation, force)
 
             # calculate moment applied to current link
-            q = transform[:3, -1]
-            moment = np.dot(rotation, moment) + np.cross(q, force)
+            linear_component = transform[:3, -1]
+            moment = np.dot(rotation, moment) + np.cross(linear_component,
+                                                         force)
 
             # append z-component as joint torque
             joint_torques.append(moment[-1])
