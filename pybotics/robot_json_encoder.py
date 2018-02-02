@@ -1,7 +1,8 @@
 """Robot JSON Encoder."""
 from json.encoder import JSONEncoder
-import numpy as np  # type: ignore
 from typing import Any
+
+import numpy as np  # type: ignore
 
 
 class RobotJSONEncoder(JSONEncoder):

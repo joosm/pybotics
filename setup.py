@@ -1,7 +1,8 @@
 """Setup module."""
-from setuptools import setup, find_packages
 import logging
 from pathlib import Path
+
+from setuptools import find_packages, setup
 
 
 def main():

@@ -1,13 +1,13 @@
 """Test geometry."""
 import hypothesis.strategies as st
-import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 
-from pybotics.constants import TRANSFORM_MATRIX_SHAPE
-from pybotics.geometry import wrap_2_pi, euler_zyx_2_matrix, \
-    matrix_2_euler_zyx, translation_matrix, rotation_matrix_x, \
-    rotation_matrix_y, rotation_matrix_z
+import numpy as np
+
+from pybotics.geometry import euler_zyx_2_matrix, matrix_2_euler_zyx, \
+    rotation_matrix_x, rotation_matrix_y, rotation_matrix_z, \
+    translation_matrix, wrap_2_pi
 
 EULER_ZYX_VECTOR = np.array([100, 200, 300,
                              np.deg2rad(-30), np.deg2rad(50), np.deg2rad(90)])

@@ -1,6 +1,6 @@
 """Kinematic chain module."""
 from itertools import compress
-from typing import Any, Sequence, Union, Sized, Optional
+from typing import Any, Optional, Sequence, Sized, Union
 
 import numpy as np  # type: ignore
 

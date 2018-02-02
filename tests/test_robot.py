@@ -3,12 +3,12 @@ import json
 from itertools import chain
 from typing import Sequence, Tuple
 
-import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import floats
 
-from pybotics.constants import TRANSFORM_VECTOR_LENGTH, TRANSFORM_MATRIX_SHAPE
+import numpy as np
+
 from pybotics.geometry import euler_zyx_2_matrix
 from pybotics.kinematic_chain import KinematicChain
 from pybotics.robot import Robot

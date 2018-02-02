@@ -2,13 +2,14 @@
 from typing import Tuple
 
 import numpy as np
-from pytest import fixture
 
 from pybotics.frame import Frame
 from pybotics.kinematic_chain import KinematicChain
 from pybotics.robot import Robot
 from pybotics.robot_model import UR10
 from pybotics.tool import Tool
+
+from pytest import fixture
 
 
 @fixture(name='planar_robot_link_lengths')

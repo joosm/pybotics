@@ -1,5 +1,5 @@
 """Robot optimization mask module."""
-from typing import NamedTuple, Union, Sequence
+from typing import NamedTuple, Sequence, Union
 
 # TODO: move to Python 3.6 style one day...
 # https://docs.python.org/3/library/typing.html#typing.NamedTuple

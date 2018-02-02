@@ -4,7 +4,6 @@ from typing import Optional, Sequence, Sized
 
 import numpy as np  # type: ignore
 
-from pybotics.constants import ROTATION_VECTOR_LENGTH
 from pybotics.frame import Frame
 from pybotics.geometry import matrix_2_euler_zyx, wrap_2_pi
 from pybotics.kinematic_chain import KinematicChain

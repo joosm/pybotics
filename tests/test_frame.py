@@ -1,8 +1,6 @@
 """Test frame."""
 import numpy as np
 
-from pybotics.constants import TRANSFORM_VECTOR_LENGTH, TRANSFORM_MATRIX_SHAPE
-
 
 def test_optimization(world_frame):
     """
