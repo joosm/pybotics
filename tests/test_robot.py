@@ -158,8 +158,21 @@ def test_repr(serial_robot):
     assert str(serial_robot) == s
 
 
+@given(
+    q=arrays(shape=(3,), dtype=float,
+             elements=floats(max_value=1e9,
+                             min_value=-1e9,
+                             allow_nan=False,
+                             allow_infinity=False)),
+    force=arrays(shape=(3,), dtype=float,
+                 elements=floats(max_value=1e9,
+                                 min_value=-1e9,
+                                 allow_nan=False,
+                                 allow_infinity=False)))
 def test_calculate_joint_torques(planar_robot: Robot,
-                                 planar_robot_link_lengths: Tuple):
+                                 planar_robot_link_lengths: Tuple,
+                                 force: np.ndarray,
+                                 q: np.ndarray):
     """
     From EXAMPLE 5.7 of
     Craig, John J. Introduction to robotics: mechanics and control.
@@ -168,22 +181,22 @@ def test_calculate_joint_torques(planar_robot: Robot,
     """
 
     # set test force and angles
-    force = [-100, -200, 0]
+    force[-1] = 0  # don't want z-force on a planar robot
+    q[-1] = 0  # want end-effector to be static
     moment = [0] * 3
     wrench = force + moment
-    joint_angles = np.deg2rad([30, 60, 0])
 
     # calculate expected torques
     expected_torques = [
-        planar_robot_link_lengths[0] * np.sin(joint_angles[1]) * force[0] +
+        planar_robot_link_lengths[0] * np.sin(q[1]) * force[0] +
         (planar_robot_link_lengths[1] + planar_robot_link_lengths[0] *
-         np.cos(joint_angles[1])) * force[1],
+         np.cos(q[1])) * force[1],
         planar_robot_link_lengths[1] * force[1],
         0
     ]
 
     # test
-    actual_torques = planar_robot.calculate_joint_torques(joint_angles, wrench)
+    actual_torques = planar_robot.calculate_joint_torques(q, wrench)
     np.testing.assert_allclose(actual_torques, expected_torques)
 
 
