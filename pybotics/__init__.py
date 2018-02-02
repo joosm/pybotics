@@ -2,11 +2,9 @@
 from importlib import import_module
 from pathlib import Path
 
-from typing import List
-
 # glob modules
 path = Path(__file__).parent
-modules = list(path.glob('*.py'))  # type: List[Path]
+modules = list(path.glob('*.py'))
 
 # import
 for mod in modules:
