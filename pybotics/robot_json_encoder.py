@@ -14,13 +14,18 @@ class RobotJSONEncoder(JSONEncoder):
         :param o:
         :return:
         """
-        # process custom instances
+        # process np arrays
         if isinstance(o, np.ndarray):
             return o.tolist()
 
-        if isinstance(o, np.int64):
-            return str(o)
+        # process np scalar types
+        try:
+            if str(o.dtype) in np.typeDict:
+                return str(o)
+        except AttributeError:
+            pass
 
+        # break down object into a dict if possible
         try:
             o = o.__dict__
         except AttributeError:
