@@ -214,7 +214,8 @@ class Robot(Sized):
                 'position_limits must have shape=(2,{})'.format(len(self)))
         self._position_limits = value
 
-    def jacobian_world(self, q: Optional[Sequence[float]] = None) -> np.ndarray:
+    def jacobian_world(self,
+                       q: Optional[Sequence[float]] = None) -> np.ndarray:
         if q is None:
             q = self.position
 
