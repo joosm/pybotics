@@ -5,6 +5,7 @@ from pytest import raises
 
 
 def test_default():
+    """Test default encoder."""
     encoder = RobotJSONEncoder()
 
     with raises(TypeError):

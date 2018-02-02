@@ -142,6 +142,7 @@ def test_init():
 
 
 def test_repr(serial_robot):
+    """Test repr."""
     s = repr(serial_robot)
 
     # check for important attributes
@@ -174,12 +175,13 @@ def test_calculate_joint_torques(planar_robot: Robot,
                                  force: np.ndarray,
                                  q: np.ndarray):
     """
+    Test Joint Torques.
+
     From EXAMPLE 5.7 of
     Craig, John J. Introduction to robotics: mechanics and control.
     Vol. 3. Upper Saddle River: Pearson Prentice Hall, 2005.
     :return:
     """
-
     # set test force and angles
     force[-1] = 0  # don't want z-force on a planar robot
     q[-1] = 0  # want end-effector to be static
@@ -206,6 +208,7 @@ def test_calculate_joint_torques(planar_robot: Robot,
                                                          allow_infinity=False)))
 def test_jacobian_world(q: np.ndarray, planar_robot: Robot,
                         planar_robot_link_lengths: Tuple):
+    """Test Jacobian in the World Frame."""
     # example from Craig has last joint set to 0
     q[-1] = 0
 
@@ -232,6 +235,7 @@ def test_jacobian_world(q: np.ndarray, planar_robot: Robot,
                 elements=floats(allow_nan=False, allow_infinity=False)))
 def test_jacobian_flange(q: np.ndarray, planar_robot: Robot,
                          planar_robot_link_lengths: Tuple):
+    """Test Jacobian Flange."""
     # example from Craig has last joint set to 0
     q[-1] = 0
 
@@ -252,6 +256,7 @@ def test_jacobian_flange(q: np.ndarray, planar_robot: Robot,
 @given(q=arrays(shape=(3,), dtype=float,
                 elements=floats(allow_nan=False, allow_infinity=False)))
 def test_ik(q: np.ndarray, planar_robot: Robot):
+    """Test IK."""
     pose = planar_robot.fk(q)
 
     q_actual = planar_robot.ik(pose, max_iter=1e9)

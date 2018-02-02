@@ -6,6 +6,7 @@ from setuptools import find_packages, setup
 
 
 def main():
+    """Run setup."""
     # paths
     root_path = Path(__file__).parent
     logging.info('Root path: {}'.format(root_path.resolve()))

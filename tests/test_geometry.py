@@ -98,6 +98,7 @@ def test_wrap_2_pi(angle):
 
 @given(st.floats(allow_nan=False, allow_infinity=False))
 def test_rotation_matrix(angle):
+    """Test rotation matrix."""
     # iterate through rotation axes
     for i, axis in enumerate('xyz'):
         # getattr() could have been used
@@ -134,6 +135,7 @@ def test_rotation_matrix(angle):
 
 @given(arrays(shape=(3,), dtype=float))
 def test_translation_matrix(xyz):
+    """Test translation matrix."""
     matrix = translation_matrix(xyz)
 
     # check orthogonality

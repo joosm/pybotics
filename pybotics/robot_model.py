@@ -1,3 +1,4 @@
+"""Pre-build robot models."""
 from typing import Optional
 
 import numpy as np  # type: ignore
@@ -9,9 +10,12 @@ from pybotics.tool import Tool
 
 
 class KukaLbrIiwa7(Robot):
+    """KUKA LBR iiwa 7 R800 collaborative robot."""
+
     # TODO: add joint limits
     def __init__(self, tool: Optional[Tool] = None,
                  world_frame: Optional[Frame] = None) -> None:
+        """Construct robot."""
         kinematic_chain = KinematicChain.from_array(
             np.array([
                 0, 0, 0, 340,
@@ -26,8 +30,11 @@ class KukaLbrIiwa7(Robot):
 
 
 class MecademicMeca500(Robot):
+    """Meca500 small robot."""
+
     def __init__(self, tool: Optional[Tool] = None,
                  world_frame: Optional[Frame] = None) -> None:
+        """Construct robot."""
         kinematic_chain = KinematicChain.from_array(
             np.array([
                 0, 0, 0, 135,
@@ -41,8 +48,11 @@ class MecademicMeca500(Robot):
 
 
 class Puma560(Robot):
+    """Puma560 robot."""
+
     def __init__(self, tool: Optional[Tool] = None,
                  world_frame: Optional[Frame] = None) -> None:
+        """Construct robot."""
         kinematic_chain = KinematicChain.from_array(
             np.array([
                 0, 0, 0, 0,
@@ -56,8 +66,11 @@ class Puma560(Robot):
 
 
 class UR10(Robot):
+    """UR10 collaborative robot."""
+
     def __init__(self, tool: Optional[Tool] = None,
                  world_frame: Optional[Frame] = None) -> None:
+        """Construct robot."""
         kinematic_chain = KinematicChain.from_array(
             np.array([
                 0, 0, 0, 118,

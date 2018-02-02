@@ -14,6 +14,7 @@ from pytest import fixture
 
 @fixture(name='planar_robot_link_lengths')
 def planar_robot_link_lengths_fixture() -> Tuple[float, float]:
+    """Get lengths for planar robot."""
     return 10, 20
 
 

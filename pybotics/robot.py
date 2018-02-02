@@ -103,6 +103,7 @@ class Robot(Sized):
     def ik(self, pose: np.ndarray, q: Optional[Sequence[float]] = None,
            alpha: float = 0.1, atol=1e-6, max_iter=1e3) -> \
             Optional[np.ndarray]:
+        """Solve the inverse kinematics."""
         # set seed joints
         q = self.position if q is None else np.array(q)
 
@@ -215,6 +216,7 @@ class Robot(Sized):
 
     def jacobian_world(self,
                        q: Optional[Sequence[float]] = None) -> np.ndarray:
+        """Calculate Jacobian with respect to the world frame."""
         if q is None:
             q = self.position
 
@@ -233,6 +235,7 @@ class Robot(Sized):
 
     def jacobian_flange(self,
                         q: Optional[Sequence[float]] = None) -> np.ndarray:
+        """Calculate Jacobian with respect to the flange."""
         q = self.position if q is None else q
 
         # init Cartesian jacobian (6-dof in space)
@@ -263,8 +266,9 @@ class Robot(Sized):
     def calculate_joint_torques(self, q: Sequence[float],
                                 wrench: Sequence[float]) -> np.ndarray:
         """
-        Calculate the joint torques
-        due to external force applied to the flange frame.
+        Calculate the joint torques.
+
+        Due to external force applied to the flange frame.
         Method from:
         5.9 STATIC FORCES IN MANIPULATORS
         Craig, John J. Introduction to robotics: mechanics and control.
@@ -273,7 +277,6 @@ class Robot(Sized):
         :param q:
         :return:
         """
-
         # split wrench into components
         force = wrench[:3]
         moment = wrench[-3:]
