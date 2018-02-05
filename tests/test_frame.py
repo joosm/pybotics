@@ -1,5 +1,8 @@
 """Test frame."""
 import numpy as np
+from pytest import raises
+
+from pybotics.frame import Frame
 
 
 def test_optimization(world_frame):
@@ -55,3 +58,9 @@ def test_position(world_frame):
     new_position = np.ones(3)
     world_frame.position = new_position
     np.testing.assert_allclose(world_frame.position, new_position)
+
+
+def test_vector(world_frame: Frame):
+    with raises(NotImplementedError):
+        # noinspection PyTypeChecker
+        world_frame.vector(None)

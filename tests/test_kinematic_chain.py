@@ -1,8 +1,10 @@
 """Kinematic chain test."""
 import numpy as np
+from pytest import raises
 
 from pybotics.kinematic_chain import KinematicChain
 from pybotics.kinematic_pair import KinematicPair
+from pybotics.link_convention import LinkConvention
 
 
 def test_len(planar_kc):
@@ -60,6 +62,10 @@ def test_array_2_links():
     """
     KinematicChain.array_2_links(np.ones((3, 4)),
                                  kinematic_pairs=3 * [KinematicPair.REVOLUTE])
+
+    with raises(NotImplementedError):
+        # noinspection PyTypeChecker
+        KinematicChain.array_2_links(np.ones((3, 4)), link_convention=None)
 
 
 def test_links():

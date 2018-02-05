@@ -58,9 +58,9 @@ class KinematicChain(Sized):
     def array_2_links(
             array: np.ndarray,
             link_convention: LinkConvention = LinkConvention.MDH,
-            kinematic_pairs:
-            Union[KinematicPair,
-                  Sequence[KinematicPair]] = KinematicPair.REVOLUTE
+            kinematic_pairs: Union[
+                KinematicPair, Sequence[KinematicPair]
+            ] = KinematicPair.REVOLUTE
     ) -> Sequence[Link]:
         """
         Generate a sequence of links from a given array of link parameters.

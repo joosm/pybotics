@@ -8,9 +8,11 @@ from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import floats
 
 import numpy as np
+from pytest import raises
 
 from pybotics.geometry import euler_zyx_2_matrix
 from pybotics.kinematic_chain import KinematicChain
+from pybotics.pybotics_error import PyboticsError
 from pybotics.robot import Robot
 from pybotics.robot_optimization_mask import RobotOptimizationMask
 
@@ -267,6 +269,9 @@ def test_ik(q: np.ndarray, planar_robot: Robot):
 
     np.testing.assert_allclose(pose_actual, pose, atol=1e-6)
 
+    # test maxiter
+    planar_robot.ik(pose, max_iter=1)
+
 
 def test_position_limits(planar_robot: Robot):
     """
@@ -280,3 +285,6 @@ def test_position_limits(planar_robot: Robot):
     ])
     planar_robot.position_limits = limits
     np.testing.assert_allclose(planar_robot.position_limits, limits)
+
+    with raises(PyboticsError):
+        planar_robot.position_limits = np.zeros(6)

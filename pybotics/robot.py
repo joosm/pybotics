@@ -217,8 +217,8 @@ class Robot(Sized):
     def jacobian_world(self,
                        q: Optional[Sequence[float]] = None) -> np.ndarray:
         """Calculate Jacobian with respect to the world frame."""
-        if q is None:
-            q = self.position
+        # validate
+        q = self.position if q is None else q
 
         jacobian_flange = self.jacobian_flange(q)
         pose = self.fk(q)
@@ -236,6 +236,7 @@ class Robot(Sized):
     def jacobian_flange(self,
                         q: Optional[Sequence[float]] = None) -> np.ndarray:
         """Calculate Jacobian with respect to the flange."""
+        # validate
         q = self.position if q is None else q
 
         # init Cartesian jacobian (6-dof in space)
@@ -263,8 +264,9 @@ class Robot(Sized):
 
         return jacobian_flange
 
-    def calculate_joint_torques(self, q: Sequence[float],
-                                wrench: Sequence[float]) -> np.ndarray:
+    def calculate_joint_torques(
+            self, q: Optional[Sequence[float]] = None,
+            wrench: Optional[Sequence[float]] = None) -> np.ndarray:
         """
         Calculate the joint torques.
 
@@ -277,6 +279,10 @@ class Robot(Sized):
         :param q:
         :return:
         """
+        # validate
+        q = self.position if q is None else q
+        wrench = np.zeros(6) if wrench is None else wrench
+
         # split wrench into components
         force = wrench[:3]
         moment = wrench[-3:]

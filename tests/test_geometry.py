@@ -4,10 +4,12 @@ from hypothesis import given
 from hypothesis.extra.numpy import arrays
 
 import numpy as np
+from pytest import raises
 
 from pybotics.geometry import euler_zyx_2_matrix, matrix_2_euler_zyx, \
     rotation_matrix_x, rotation_matrix_y, rotation_matrix_z, \
     translation_matrix, wrap_2_pi
+from pybotics.pybotics_error import PyboticsError
 
 EULER_ZYX_VECTOR = np.array([100, 200, 300,
                              np.deg2rad(-30), np.deg2rad(50), np.deg2rad(90)])
@@ -154,3 +156,6 @@ def test_translation_matrix(xyz):
     # check homogeneous matrix
     # noinspection PyTypeChecker
     np.testing.assert_allclose(matrix[-1, :-1], 0)
+
+    with raises(PyboticsError):
+        translation_matrix(np.zeros(10))
