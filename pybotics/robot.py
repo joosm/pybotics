@@ -28,7 +28,7 @@ class Robot(Sized):
         :param world_frame: transform of robot base with respect to the world
         """
         self._position = np.zeros(kinematic_chain.num_dof)
-        self._position_limits = np.repeat((-np.inf, np.inf),
+        self._position_limits = np.repeat((-2 * np.pi, 2 * np.pi),
                                           kinematic_chain.num_dof
                                           ).reshape((2, -1))
 
