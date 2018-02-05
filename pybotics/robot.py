@@ -1,6 +1,7 @@
 """Robot module."""
 import logging
 from typing import Optional, Sequence, Sized
+import json
 
 import numpy as np  # type: ignore
 
@@ -313,3 +314,6 @@ class Robot(Sized):
 
         # reverse torques into correct order
         return np.array(list(reversed(joint_torques)), dtype=float)
+
+    def to_json(self) -> str:
+        return json.dumps(self, cls=RobotJSONEncoder, indent=4, sort_keys=True)

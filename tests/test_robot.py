@@ -288,3 +288,8 @@ def test_position_limits(planar_robot: Robot):
 
     with raises(PyboticsError):
         planar_robot.position_limits = np.zeros(6)
+
+
+def test_to_json(serial_robot: Robot):
+    js = serial_robot.to_json()
+    json.loads(js)
