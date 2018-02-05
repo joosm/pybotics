@@ -317,3 +317,128 @@ class Robot(Sized):
 
     def to_json(self) -> str:
         return json.dumps(self, cls=RobotJSONEncoder, indent=4, sort_keys=True)
+
+    def joint_range_availability(
+            self,
+            q: Optional[Sequence[float]] = None) -> float:
+        """
+        Calculate the JRA.
+
+        Liegeois, Alain.
+        "Automatic supervisory control of the configuration and behavior of
+        multibody mechanisms."
+        IEEE transactions on systems, man,
+        and cybernetics 7.12 (1977): 868-871.
+        :param q:
+        :return:
+        """
+        # validate
+        q = self.position if q is None else q
+
+        return float(np.sum(np.square(q)))
+
+    def joint_mid_range_proximity(
+            self, q: Optional[Sequence[float]] = None,
+            w: Optional[np.ndarray] = None) -> float:
+        """
+        Calculate the proximity to the joint mid range.
+
+        Baron, L.
+        A joint-limits avoidance strategy for arc-welding robots.
+        Paper presented at the International Conference on Integrated Design
+        and Manufacturing in Mechanical Engineering. Montreal
+        :param q:
+        :param w:
+        :return:
+        """
+        # validate
+        q = self.position if q is None else q
+        w = np.eye(self.num_dof) if w is None else w
+
+        mid_range_joints = 0.5 * np.sum(self.position_limits, axis=0)
+
+        diff = q - mid_range_joints
+        z_0 = 0.5 * diff.transpose()
+        z_1 = np.dot(w, diff)
+        z = np.dot(z_0, z_1)
+
+        return float(z)
+
+    def joint_velocity_measure(
+            self, q_d: Sequence[float],
+            q: Optional[Sequence[float]] = None) -> float:
+        """
+        Calculate the Joint Velocity Measure (JVM).
+
+        Represents the magnitude of joint velocity
+        by computing the displacement to be traveled.
+
+        Kapoor, C., Cetin,M., Tesar, D.: Performance based redundancy
+        resolution with multiple criteria. In: Design Engineering
+        Technical Conference, DETC98, ASME. Georgia
+        (1998)
+        :param q:
+        :param w:
+        :return:
+        """
+        # validate
+        q = self.position if q is None else q
+        return float(np.sum(np.square(q_d - q)))
+
+    def random_position(self, in_place: bool = False) -> Optional[np.ndarray]:
+        q = np.random.uniform(
+            low=self.position_limits[0],
+            high=self.position_limits[1]
+        )
+        if in_place:
+            self.position = q
+        else:
+            return q
+
+    def manipulability_index(
+            self, q: Optional[Sequence[float]] = None) -> float:
+        """
+        Calculate the Manipulability Index.
+
+        Yoshikawa, T.: Manipulability of robotic mechanisms.
+        Int. J. Robot. Res. 4(2), 3–9 (1985).
+        doi:10.1177/027836498500400201
+        :return:
+        """
+        # validate
+        q = self.position if q is None else q
+
+        jacob = self.jacobian_world(q)
+
+        # check if jacobian is square (aka non-redundant)
+        is_square_jacob = jacob.shape[0] == jacob.shape[1]
+        if is_square_jacob:
+            jacob_det = np.linalg.det(jacob)
+            w = np.abs(jacob_det)
+        else:
+            jacob_2 = np.dot(jacob, jacob.transpose())
+            jacob_det = np.linalg.det(jacob_2)
+            w = np.sqrt(jacob_det)
+
+        return float(w)
+
+    def condition_number(self, q: Optional[Sequence[float]] = None) -> float:
+        """
+        Calculate the Condition Number.
+
+        Salisbury, J.K., Craig, J.J.: Articulated hands: force control
+        and kinematic issues. Int. J. Robot. Res. 1(1), 4–17 (1982).
+        doi:10.1177/027836498200100102
+
+        The condition number does not have an upper bound. κ ∈ [1,∞]
+        :param q:
+        :return:
+        """
+        # validate
+        q = self.position if q is None else q
+
+        jacob = self.jacobian_world(q)
+
+        k = np.linalg.norm(jacob) * np.linalg.norm(np.linalg.pinv(jacob))
+
+        return float(k)
