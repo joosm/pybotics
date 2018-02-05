@@ -21,7 +21,7 @@ class RobotJSONEncoder(JSONEncoder):
 
         # process np scalar types
         try:
-            if str(o.dtype) in np.typeDict:
+            if str(o.dtype) in np.typeDict:  # pragma: no branch
                 return str(o)
         except AttributeError:
             pass
